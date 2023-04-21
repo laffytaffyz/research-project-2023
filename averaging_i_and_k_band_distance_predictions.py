@@ -59,7 +59,7 @@ predicted_k_and_i_relation_avg_distance = pd.concat([predicted_oldiband_distance
 predicted_k_and_i_relation_avg_distance = (predicted_k_and_i_relation_avg_distance[0]+predicted_k_and_i_relation_avg_distance[1])/2
 k_and_i_relation_df = df[df['mi'].notna() & df['mk'].notna() & (df['age (gyr)'] > 2)]
 k_and_i_relation_avg_rms = math.sqrt((((k_and_i_relation_df['m-M']-predicted_k_and_i_relation_avg_distance)**2).sum())/len(k_and_i_relation_df['m-M']-predicted_k_and_i_relation_avg_distance))
-print('I-band and K-band Relation Average RMS:', kandirelation_avg_rms)
+print('I-band and K-band Relation Average RMS:', k_and_i_relation_avg_rms)
 print("Percent RMS:", math.sqrt(((((k_and_i_relation_df['m-M']-predicted_k_and_i_relation_avg_distance)/predicted_k_and_i_relation_avg_distance)**2).sum())/len(k_and_i_relation_df['m-M']-predicted_k_and_i_relation_avg_distance)))
 
 # calculating the RMS of the distances predicted from the average I-band magnitude, from the average K-band magnitude, and from the average of both their predicted distances
@@ -79,7 +79,7 @@ print("Percent RMS:", math.sqrt(((((kolddf['m-M']-predicted_k_distance)/predicte
 
 predicted_k_and_i_avg_distance = pd.concat([predicted_i_distance, predicted_k_distance], axis=1).dropna()
 predicted_k_and_i_avg_distance = (predicted_k_and_i_avg_distance['app_mi']+predicted_k_and_i_avg_distance['app_mk'])/2
-kandi_df = df[df['mi'].notna() & df['mk'].notna()]
+k_and_i_df = df[df['mi'].notna() & df['mk'].notna()]
 predicted_k_and_i_avg_rms = math.sqrt((((k_and_i_df['m-M']-predicted_k_and_i_avg_distance)**2).sum())/len(k_and_i_df['m-M']-predicted_k_and_i_avg_distance))
 
 print('Mean I-band and K-band Average RMS', predicted_k_and_i_avg_rms)
