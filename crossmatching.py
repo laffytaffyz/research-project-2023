@@ -1,6 +1,6 @@
-# crossmatching GES and Gaia data
-# since GES already classified Trumpler 20 stars, data from Gaia will 
-# be added onto GES data when applicable
+# crossmatching GES and red clump data
+# since GES data contains a mix of star data of the cluster, including the red clump
+# the GES will data will be added onto the red clump data when applicable
 
 import numpy as np
 import pandas as pd
@@ -10,6 +10,7 @@ import os
 directory = "C:\\Users\\tiffa\\Downloads\\2022-2023 HSR\\Red Clump Cluster Data"
 destination_directory = "C:\\Users\\tiffa\\Downloads\\2022-2023 HSR\\Final Red Clump Cluster Data"
 
+# crosshatching red clump and GES files of the same clusters
 for files in os.listdir(directory):
     cluster_name = files[:files.index("-red clump.csv")]
     rc_df = pd.read_csv(directory + "\\" + cluster_name + '-red clump.csv')
@@ -28,7 +29,8 @@ for files in os.listdir(directory):
     e_feh_list = list()
 
     count = 0
-
+    
+    # looping through each red clump csv row 
     for index, row in rc_df.iterrows():
         rc_ra = row['ra']
         rc_dec = row['dec']
@@ -47,17 +49,19 @@ for files in os.listdir(directory):
 
         closest_adist = 10 # in radians so largest is pi
 
+        # looping through GES csv for each red clump row
         for index, row in ges_df.iterrows():
             ges_ra = row['RA']
             ges_dec = row['DECLINATION']
             ges_error = 0.025
-
+            
+            # checking for neighbors
             if (min(ges_ra + ges_error, rc_ra + rc_ra_error) >= max (ges_ra - ges_error, rc_ra - rc_ra_error) 
                 and min(ges_dec + ges_error, rc_dec + rc_dec_error) >= max (ges_dec - ges_error, rc_dec - rc_dec_error)):
                 cos_adist = math.sin(ges_dec*math.pi/180)*math.sin(rc_dec*math.pi/180)+math.cos(ges_dec*math.pi/180)*math.cos(rc_dec*math.pi/180)*math.cos((ges_ra-rc_ra)*math.pi/180)
                 adist = math.acos(cos_adist)
 
-                # updating column value for the row when applicable
+                # updating column value for the row when new neighbor is closer
                 if adist < closest_adist:
                     closest_adist = adist
 
