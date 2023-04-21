@@ -1,3 +1,5 @@
+# isolates red clump based on the color-magnitude diagram ranges from a csv file
+
 import os, pandas as pd, numpy as np, math
 
 directory = "C:\\Users\\tiffa\\Downloads\\2022-2023 HSR\\Revised Gaia 2MASS Data"
