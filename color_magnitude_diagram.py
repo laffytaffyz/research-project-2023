@@ -20,7 +20,7 @@ def scatter_hist(x, y, ax, ax_histx, ax_histy):
     ax_histx.hist(x, bins=xbins)
     ax_histy.hist(y, bins=ybins, orientation='horizontal')
 
-# locate directory with all the cluster .csv files
+# loop through directory with all the cluster .csv files
 directory = "C:\\Users\\tiffa\\Downloads\\2022-2023 HSR\\Revised Gaia 2MASS Data"
 
 for files in os.listdir(directory):
@@ -32,14 +32,17 @@ for files in os.listdir(directory):
     general_clusters_df.set_index("GES_FLD", inplace = True)
     general_cluster_df = general_clusters_df.loc[cluster_name]
 
+    # calculating x-axis
     reddening = 0.52*(float)(general_cluster_df.iloc[6])
     appcolor = df['j_m'] - (df["ks_m"] + 0.044)
     color = df['j_m'] - (df["ks_m"] + 0.044) - reddening
 
+    # calculating y-axis
     extinction = 0.3584*(float)(general_cluster_df.iloc[6])
     appmag = df["ks_m"] + 0.044
     mag = (df["ks_m"]  + 0.044) + 5 -5*np.log10(1000/df['parallax']) - extinction
 
+    # making plot
     fig = plt.figure()
     gs = fig.add_gridspec(2, 2,  width_ratios=(4, 1), height_ratios=(1, 4), wspace=0.05, hspace=0.05)
     ax = fig.add_subplot(gs[1, 0])
@@ -52,13 +55,11 @@ for files in os.listdir(directory):
 
     ax.text(0.05, 0.95, cluster_name, transform=ax.transAxes, fontsize=14, verticalalignment='top')
     scatter_hist(color, mag,ax,ax_histx,ax_uuuuungle((0.92, -2.7), 0.3, 0.6, linewidth=1, edgecolor='r', facecolor='none')
-   # ax.add_patch(rect)   
 
-   # checking RC in the CMDs
+    # checking RC in the CMDs
     rcdf = pd.read_csv('C:\\Users\\tiffa\\Downloads\\2022-2023 HSR\\Red Clump Cluster Data\\' + cluster_name + '-red clump.csv')
     rccolor = rcdf['j_m'] - (rcdf["ks_m"] + 0.044) - reddening
     rcmag = (rcdf["ks_m"]  + 0.044) + 5 -5*np.log10(1000/rcdf['parallax']) - extinction
-   # ax.scatter(color,mag,s=5,alpha=0.5)
     ax.scatter(rccolor, rcmag,s=5,alpha=0.5)
     ax.set_title('Color-Magnitude Diagram of ' + cluster_name, pad = 70)
     plt.show()
