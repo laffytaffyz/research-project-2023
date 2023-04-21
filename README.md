@@ -6,8 +6,8 @@ Red clump (RC) stars are a distance indicator that clumps on the color-magnitude
 
 ### Dependencies
 Python 3.10.4 <br />
-NumPy
-Matplotlib
-Pandas
-Statsmodels
-Sklearn
+NumPy <br />
+Matplotlib <br />
+Pandas <br />
+Statsmodels <br />
+Sklearn <br />
