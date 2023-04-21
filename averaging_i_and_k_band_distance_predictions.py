@@ -20,7 +20,7 @@ kolddf = kdf.drop(kdf[kdf['age (gyr)']<2].index)
 
 predicted_youngiband_mag = youngiband(iyoungdf['feh'])
 predicted_alliband_mag = alliband(idf['feh'])
-predicted_oldiband_mag = alliband(iolddf['feh']) 
+predicted_oldiband_mag = alliband(iolddf['feh']) # note that any mention of the old i-band is the use of the all i-band relation on the old red clump data
 predicted_oldkband_mag = oldkband(kolddf['feh'])
 
 # calculating the RMS for each of predicted magnitudes from the relations
@@ -55,10 +55,10 @@ print('Old K-band RMS:', koldrms)
 print("Percent RMS:", math.sqrt(((((kolddf['m-M']-predicted_oldkband_distance)/predicted_oldkband_distance)**2).sum())/len(kolddf['m-M']-predicted_oldkband_distance)))
 
 # calculating the RMS of the average distances predicted from the I-band relation of all of the RC and K-band relation of old RC
-predicted_kandirelation_avg_distance = pd.concat([predicted_oldiband_distance, predicted_oldkband_distance], axis=1).dropna()
-predicted_kandirelation_avg_distance = (predicted_kandirelation_avg_distance[0]+predicted_kandirelation_avg_distance[1])/2
-kandirelation_df = df[df['mi'].notna() & df['mk'].notna() & (df['age (gyr)'] > 2)]
-kandirelation_avg_rms = math.sqrt((((kandirelation_df['m-M']-predicted_kandirelation_avg_distance)**2).sum())/len(kandirelation_df['m-M']-predicted_kandirelation_avg_distance))
+predicted_k_and_i_relation_avg_distance = pd.concat([predicted_oldiband_distance, predicted_oldkband_distance], axis=1).dropna()
+predicted_k_and_i_relation_avg_distance = (predicted_k_and_i_relation_avg_distance[0]+predicted_k_and_i_relation_avg_distance[1])/2
+k_and_i_relation_df = df[df['mi'].notna() & df['mk'].notna() & (df['age (gyr)'] > 2)]
+k_and_i_relation_avg_rms = math.sqrt((((kandirelation_df['m-M']-predicted_kandirelation_avg_distance)**2).sum())/len(kandirelation_df['m-M']-predicted_kandirelation_avg_distance))
 print('I-band and K-band Relation Average RMS:', kandirelation_avg_rms)
 print("Percent RMS:", math.sqrt(((((kandirelation_df['m-M']-predicted_kandirelation_avg_distance)/predicted_kandirelation_avg_distance)**2).sum())/len(kandirelation_df['m-M']-predicted_kandirelation_avg_distance)))
 
