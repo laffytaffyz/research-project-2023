@@ -20,7 +20,7 @@ kolddf = kdf.drop(kdf[kdf['age (gyr)']<2].index)
 
 predicted_youngiband_mag = youngiband(iyoungdf['feh'])
 predicted_alliband_mag = alliband(idf['feh'])
-predicted_oldiband_mag = alliband(iolddf['feh'])
+predicted_oldiband_mag = alliband(iolddf['feh']) 
 predicted_oldkband_mag = oldkband(kolddf['feh'])
 
 # calculating the RMS for each of predicted magnitudes from the relations
