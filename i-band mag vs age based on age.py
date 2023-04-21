@@ -55,9 +55,7 @@ line = np.linspace(age.min(), age.max(), 100)
 model = np.poly1d(np.polyfit(age, mag, 1)) 
 ax.plot(line, model(line), c='black',linewidth=1.5)
 
+# vertical line to separate old and young red clump
 ax.axvline(math.log10(2000*(10**6)), color = "black", linestyle = "--", linewidth = 1.0)
-# ax.text(6, -1.31, r"$M_{K,young} = (-0.0382 \pm 0.038)\log(Age) + (-1.3039 \pm 0.305)$", fontsize = 8)
-# ax.text(6, -1.27, r"$M_{K,old} = (0.1893 \pm 0.178)\log(Age) + (-3.3526 \pm 1.730)$",  fontsize = 8)
-# regular is M_K = (0.0043 +- 0.028)age + (-1.6175 +- 0.241)
 
 plt.show()
