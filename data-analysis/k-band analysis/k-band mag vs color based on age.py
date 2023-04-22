@@ -4,21 +4,24 @@ import numpy as np
 import statsmodels.formula.api as smf
 from sklearn.linear_model import LinearRegression
 
+# processing data
 df = pd.read_csv("C:\\Users\\tiffa\\Downloads\\2022-2023 HSR\\red clump.csv")
 df = df.dropna()
 df = df.drop(df[df['J-K']>0.8].index)
-
 mag = np.array(df['MK'])
 color = np.array(df['J-K'])
 
+# calculating properties of young red clump
 youngdf = df[df['Age'] < 2000]
 youngmag = np.array(youngdf['MK'])
 youngcolor = np.array(youngdf['J-K'])
 
+# calculating properties of old red clump
 olddf = df[df['Age'] > 2000]
 oldmag = np.array(olddf['MK'])
 oldcolor = np.array(olddf['J-K'])
 
+# defining y and x values for statistical OLS analysis   
 youngx = youngcolor
 oldx = oldcolor
 youngy = youngmag
@@ -39,6 +42,7 @@ ax.set_xlabel(r'$(J-K)_0$ (mag)')
 ax.scatter(youngx,youngy,s=10,c="blue") 
 ax.scatter(oldx,oldy,s=10,c="red") 
 
+# drawing fit lines
 youngline = np.linspace(youngx.min(), youngx.max(), 100) 
 youngmodel = np.poly1d(np.polyfit(youngx, youngy, 1)) 
 ax.plot(youngline, youngmodel(youngline), c='blue',linewidth=1.0)
@@ -50,9 +54,5 @@ ax.plot(oldline, oldmodel(oldline), c='red',linewidth=1.0)
 line = np.linspace(color.min(), color.max(), 100) 
 model = np.poly1d(np.polyfit(color, mag, 1)) 
 ax.plot(line, model(line), c='black',linewidth=1.5)
-
-# ax.text(0.68, -1.85, r"$M_{K,young} = (-0.8684 \pm 0.981)*(J-K)_0 + (-1.0940 \pm 0.590)$", fontsize = 8)
-# ax.text(0.7, -1.81, r"$M_{K,old} = (-1.2298 \pm 1.868)*(J-K)_0 + (-0.7757 \pm 1.121)$",  fontsize = 8)
-# regular mk is (-1.2452 +- 0.812)*color + (-0.8338 +- 0.491)
 
 plt.show()
